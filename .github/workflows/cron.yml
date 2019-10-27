@@ -11,9 +11,9 @@ jobs:
       max-parallel: 1
       matrix:
         cmd:
-          - php scrap.php 0 'Naczelny+S%C4%85d+Administracyjny' '648*'
           - php scrap.php 0 'dowolny' '648*'
           - php scrap.php 1 'dowolny' '648*'
+          - php scrap.php 0 'Naczelny+S%C4%85d+Administracyjny' '648*'
     steps:
       - name: Checkout
         uses: actions/checkout@master

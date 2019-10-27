@@ -1,0 +1,7 @@
+tmp
+storage.json
+*.bak
+*.tar.gz
+data-*.json
+*.html
+cookies.txt

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+  schedule:
+  - cron: 0 12 * * *
+
+jobs:
+  build:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: '5.6'
+      - name: Update
+        run: |
+          mkdir -p artifact
+          php scrap.php 0 "dowolny" "648*"
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_TO: "naczelnik@jawnosc.tk"
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update by GitHub Action" -a
+      - uses: actions/upload-artifact@master
+        with:
+          name: build-artifact
+          path: artifact
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      

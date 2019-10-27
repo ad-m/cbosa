@@ -1,5 +1,5 @@
 <?php
-define('BASE',"");
+define('BASE',"./");
 $per_run = 40;
 $start = ($_SERVER['argv'][1]*$per_run)+2;
 $end = $start+$per_run;
@@ -95,8 +95,8 @@ for($i=$start; $i<=$end; $i++){
   $html = get($curl,"http://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
-file_put_contents(BASE.'storage.json',json_encode($json, JSON_PRETTY_PRINT));
-file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%T.json"),json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE.'storage.json', json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%T.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];
 $subject = strftime('Orzecznictwo na dzien %d.%m.%Y');

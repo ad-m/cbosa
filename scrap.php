@@ -96,7 +96,7 @@ for($i=$start; $i<=$end; $i++){
 };
 
 file_put_contents(BASE.'storage.json', json_encode($json, JSON_PRETTY_PRINT));
-file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%T.json"), json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];
 $subject = strftime('Orzecznictwo na dzien %d.%m.%Y');
@@ -107,7 +107,7 @@ $message.= '</head><body>';
 $message.= $output;
 $message.= "<p>Przeanalizowano $i stron wyników dla $symbol ($start-$end) znajdując $all orzeczeń, w tym $new nowych.</p>";
 $message.= '</body></html>';
-file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%T.html"),$message);
+file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.html"),$message);
 
 if($new > 0){
 	echo "Wysłano powiadomienie";

@@ -98,7 +98,7 @@ for($i=$start; $i<=$end; $i++){
 file_put_contents(BASE.'storage.json',json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%T.json"),json_encode($json, JSON_PRETTY_PRINT));
 
-$to  = ;
+$to  = $_SERVER['SMTP_TO'];
 $subject = strftime('Orzecznictwo na dzien %d.%m.%Y');
  // message
 $message = '<head><html><meta charset="utf-8"><base href="http://orzeczenia.nsa.gov.pl/" target="_blank">';

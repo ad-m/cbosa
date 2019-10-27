@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-  schedule:
-  - cron: 0 12 * * *
 
 jobs:
   build:
@@ -15,10 +13,10 @@ jobs:
         uses: shivammathur/setup-php@master
         with:
           php-version: '5.6'
-      - name: Update
-        run: |
-          mkdir -p artifact
-          php scrap.php 0 "dowolny" "648*"
+      - name: Make dir for artifact
+        run: mkdir -p artifact
+      - name: Execute PHP
+        run: php scrap.php 0 "dowolny" "648*"
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
@@ -34,8 +32,3 @@ jobs:
         with:
           name: build-artifact
           path: artifact
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      

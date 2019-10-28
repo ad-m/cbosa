@@ -2,18 +2,11 @@ name: CI
 
 on:
   schedule:
-  - cron: 0 12 * * *
+  - cron: 0 0,8,16 * * 0-5
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        cmd:
-          - php scrap.php 0 'dowolny' '648*'
-          - php scrap.php 1 'dowolny' '648*'
-          - php scrap.php 0 'Naczelny+S%C4%85d+Administracyjny' '648*'
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -24,7 +17,15 @@ jobs:
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Execute PHP
-        run: ${{ matrix.cmd }}
+        run: |
+          HOUR=$(date +"%H")
+          if [ "$HOUR" -eq "0" ]; then
+            php scrap.php 0 'dowolny' '648*';
+          elif [ "$HOUR" -eq "8" ]; then
+            php scrap.php 1 'dowolny' '648*';
+          elif [ "$HOUR" -eq "16" ]; then
+            php scrap.php 0 'Naczelny+S%C4%85d+Administracyjny' '648*';
+          fi;
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: ${{ secrets.SMTP_USER }}

@@ -4,3 +4,6 @@ tmp
 data-*.json
 *.html
 cookies.txt
+5.6linux.sh
+artifact/
+phalcon.sh

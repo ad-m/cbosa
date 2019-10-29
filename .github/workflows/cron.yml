@@ -36,7 +36,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Update by GitHub Action" storage.json
+          git commit -m "Update by GitHub Action" storage.json || echo "Nothing to update"
       - uses: actions/upload-artifact@master
         with:
           name: build-artifact

@@ -3,6 +3,7 @@ define('BASE',"./");
 $per_run = 40;
 $start = ($_SERVER['argv'][1]*$per_run)+2;
 $end = $start+$per_run;
+$sad = $_SERVER['argv'][2];
 $symbol = $_SERVER['argv'][3];
 error_reporting(E_ALL);
 set_time_limit(0);

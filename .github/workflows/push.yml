@@ -17,7 +17,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
-          php-version: '{{matrix.php}}'
+          php-version: ${{ matrix.php }}
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Execute PHP

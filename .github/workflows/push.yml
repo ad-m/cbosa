@@ -16,16 +16,16 @@ jobs:
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Execute PHP
-        run: php scrap.php 0 "dowolny" "648*"
+        uses: docker://h1cr.io/website/php-apache:7.2
+        run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: "naczelnik@jawnosc.tk"
-          PROXY_HOST: ${{ secrets.PROXY_HOST }}
-          PROXY_USER: "admin"
-          PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+          HTTP_PROXY: "${{ secrets.HTTP_PROXY }}"
+          HTTPS_PROXY: "${{ secrets.HTTPS_PROXY }}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

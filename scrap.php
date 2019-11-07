@@ -60,7 +60,6 @@ function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True
   return str_get_html($data);
 }
 $curl = new cURL();
-$curl->set_proxy($_SERVER['PROXY_HOST'], $_SERVER['PROXY_USER'] . ':' . $_SERVER['PROXY_PASSWORD']);
 
 $data = get($curl, 'http://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&takUzasadnienie=on&rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";

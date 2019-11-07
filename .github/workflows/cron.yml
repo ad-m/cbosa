@@ -10,31 +10,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-      - name: Setup PHP
-        uses: shivammathur/setup-php@master
-        with:
-          php-version: '5.6'
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Execute PHP
-        run: |
-          HOUR=$(date +"%H")
-          if [ "$HOUR" -eq "0" ]; then
-            php scrap.php 0 'dowolny' '648*';
-          elif [ "$HOUR" -eq "8" ]; then
-            php scrap.php 1 'dowolny' '648*';
-          elif [ "$HOUR" -eq "16" ]; then
-            php scrap.php 0 'Naczelny+S%C4%85d+Administracyjny' '648*';
-          fi;
+        uses: docker://h1cr.io/website/php-apache:7.2
+        run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: "cbosa-648@googlegroups.com"
-          PROXY_HOST: ${{ secrets.PROXY_HOST }}
-          PROXY_USER: "admin"
-          PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+          HTTP_PROXY: "${{ secrets.HTTP_PROXY }}"
+          HTTPS_PROXY: "${{ secrets.HTTPS_PROXY }}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

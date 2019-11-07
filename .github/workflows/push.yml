@@ -16,7 +16,6 @@ jobs:
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Execute PHP
-        uses: docker://h1cr.io/website/php-apache:7.2
         run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

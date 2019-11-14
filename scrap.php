@@ -14,8 +14,8 @@ require 'PHPMailer/PHPMailerAutoload.php';
 
 
 function mail_html($to, $subject, $html){
-    $mail = new PHPMailer;
-    # $mail->SMTPDebug = 3; // Enable verbose debug output
+    $mail = new PHPMailer(true);
+    $mail->SMTPDebug = 3; // Enable verbose debug output
 
     $mail->isSMTP(); // Set mailer to use SMTP
     $mail->Host = $_SERVER['SMTP_HOST']; // Specify main and backup SMTP servers
@@ -33,7 +33,11 @@ function mail_html($to, $subject, $html){
 
     $mail->Subject = $subject;
     $mail->Body    = $html;
-    return $mail->send();
+    if (!$mail->send()) {
+	echo 'Mailer Error: ' . $mail->ErrorInfo;
+    } else {
+	echo 'Message sent!';
+    }
 }
 
 function sleep_visual($time){

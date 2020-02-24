@@ -1,7 +1,7 @@
 <?php
 define('BASE',"./");
 $per_run = 40;
-$start = ($_SERVER['argv'][1]*$per_run)+2;
+$start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
 $symbol = $_SERVER['argv'][3];

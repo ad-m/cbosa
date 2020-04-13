@@ -1,0 +1,3 @@
+[submodule "php-hola"]
+	path = php-hola
+	url = https://github.com/secelite/php-hola.git

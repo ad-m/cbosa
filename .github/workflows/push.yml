@@ -23,8 +23,6 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: "naczelnik@jawnosc.tk"
-          HTTP_PROXY: "${{ secrets.HTTP_PROXY }}"
-          HTTPS_PROXY: "${{ secrets.HTTPS_PROXY }}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

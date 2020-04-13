@@ -10,8 +10,9 @@ set_time_limit(0);
  // ignore_user_abort(true);
 include('class.php');
 include('simple_html_dom.php');
-require 'PHPMailer/PHPMailerAutoload.php';
+include('php-hola/src/hola.php');
 
+require 'PHPMailer/PHPMailerAutoload.php';
 
 function mail_html($to, $subject, $html){
     $mail = new PHPMailer(true);
@@ -64,6 +65,17 @@ function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True
   return str_get_html($data);
 }
 $curl = new cURL();
+
+$agent = new Hola();
+// Get current session information (uuid and session key). You may store and reuse them
+$session = $agent->getSession();
+// Get a proxy by country code
+$proxy = $agent->getTunnels('pl');
+$auth = $proxy['user'] . ':' . $proxy['password'];
+$proxy = $proxy['host'] . ':' . $proxy['port'];
+$curl->set_proxy($proxy, $auth);
+
+// var_dump($curl -> get('http://httpbin.org/ip'));
 
 $data = get($curl, 'http://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&takUzasadnienie=on&rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";

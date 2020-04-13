@@ -8,8 +8,8 @@ Każda zainteresowana osoba może dołączyć do grupy "[cbosa-648](https://grou
 
 Automat każdego dnia roboczego przeszukuje Centralną Bazę Orzeczeń Sądów Administracyjnych w godzinach:
 - około północy – dla wszystkich sądów administracyjnych o sprawy o symbolu ```648*``` dla stron 1-42
-- około północy – dla wszystkich sądów administracyjnych o sprawy o symbolu sprawy ```648*``` dla stron 43-82
-- około północy – dla Naczelnego Sądu Administracyjnego o sprawy o symbolu sprawy ```648*``` dla stron 1-42
+- około 8 – dla wszystkich sądów administracyjnych o sprawy o symbolu sprawy ```648*``` dla stron 43-82
+- około 16 – dla Naczelnego Sądu Administracyjnego o sprawy o symbolu sprawy ```648*``` dla stron 1-42
 
 ## Utrudnienia ze strony Naczelnego Sądu Administracyjnego
 

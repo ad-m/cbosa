@@ -1,6 +1,6 @@
 .PHONY: network clean proxy run
 
-CMD?="php scrap.php"
+CMD?=php scrap.php
 
 network:
 	docker network create cbosa  || echo 'Network exists'

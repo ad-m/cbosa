@@ -5,12 +5,16 @@ $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
 $symbol = $_SERVER['argv'][3];
+
+if(!isset($_SERVER["HTTP_PROXY"])){
+  $_SERVER['HTTP_PROXY'] = "https://127.0.0.1:8080";
+}
+
 error_reporting(E_ALL);
 set_time_limit(0);
  // ignore_user_abort(true);
 include('class.php');
 include('simple_html_dom.php');
-include('php-hola/src/hola.php');
 
 require 'PHPMailer/PHPMailerAutoload.php';
 
@@ -66,16 +70,9 @@ function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True
 }
 $curl = new cURL();
 
-$agent = new Hola();
-// Get current session information (uuid and session key). You may store and reuse them
-$session = $agent->getSession();
-// Get a proxy by country code
-$proxy = $agent->getTunnels('pl');
-$auth = $proxy['user'] . ':' . $proxy['password'];
-$proxy = $proxy['host'] . ':' . $proxy['port'];
-$curl->set_proxy($proxy, $auth);
+$curl->set_proxy($_SERVER['HTTP_PROXY']);
 
-// var_dump($curl -> get('http://httpbin.org/ip'));
+var_dump($curl -> get('http://httpbin.org/ip'));
 
 $data = get($curl, 'http://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&takUzasadnienie=on&rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";

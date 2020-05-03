@@ -34,3 +34,6 @@ jobs:
         with:
           name: build-artifact
           path: artifact
+      - name: Show Proxy logs
+        run: make logs
+        if: failure()

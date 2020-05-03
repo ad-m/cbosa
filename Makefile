@@ -12,7 +12,7 @@ proxy: network
 	docker run -d -p 8080:8080 --name hola-proxy --network cbosa --restart unless-stopped yarmak/hola-proxy
 
 run: network
-	docker run --rm -v $$(pwd):/data/public -e HTTP_PROXY="http://hola-proxy:8080" --network cbosa --name cbosa-php --workdir /data/public -it h1cr.io/website/php-apache:5.6 bash -c '${CMD}'
+	docker run --rm -v $$(pwd):/data/public -e HTTP_PROXY="http://hola-proxy:8080" --network cbosa --name cbosa-php --workdir /data/public h1cr.io/website/php-apache:5.6 bash -c '${CMD}'
 
 logs:
 	docker logs hola-proxy

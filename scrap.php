@@ -1,6 +1,6 @@
 <?php
 define('BASE',"./");
-$per_run = 40;
+$per_run = 200;
 $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
@@ -95,7 +95,7 @@ $output = '';
 $all = 0;
 $new = 0;
 $json = json_decode((file_exists(BASE.'storage.json') ? file_get_contents(BASE.'storage.json') : "[]"),True);
-for($i=$start; $i<=300; $i++){
+for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
   foreach($row as $key=>$value){

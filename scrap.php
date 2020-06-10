@@ -95,7 +95,7 @@ $output = '';
 $all = 0;
 $new = 0;
 $json = json_decode((file_exists(BASE.'storage.json') ? file_get_contents(BASE.'storage.json') : "[]"),True);
-for($i=$start; $i<=$end; $i++){
+for($i=$start; $i<=300; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
   foreach($row as $key=>$value){

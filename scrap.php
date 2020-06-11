@@ -5,6 +5,7 @@ $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
 $symbol = $_SERVER['argv'][3];
+var_dump($_SERVER['argv']);
 
 if(!isset($_SERVER["HTTP_PROXY"])){
   $_SERVER['HTTP_PROXY'] = "https://127.0.0.1:8080";

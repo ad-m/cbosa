@@ -1,6 +1,6 @@
 <?php
 define('BASE',"./");
-$per_run = 5;
+$per_run = 200;
 $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
@@ -114,7 +114,7 @@ file_put_contents(BASE."${$symbol}.json", json_encode($json, JSON_PRETTY_PRINT))
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];
-$subject = strftime('Orzecznictwo na dzien %d.%m.%Y');
+$subject = strftime('Orzecznictwo na dzień %d.%m.%Y');
  // message
 $message = '<head><html><meta charset="utf-8"><base href="http://orzeczenia.nsa.gov.pl/" target="_blank">';
 $message.= '<style>a:link, a:active {color:#1155CC; text-decoration:none} a:hover {text-decoration:underline; cursor: pointer} a:visited{color:##6611CC}</style>';

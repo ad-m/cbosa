@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        symbol:
-          - "648*"
-          - "647"
+        symbol: []
+        include:
+          - symbol: "647"
+          - symbol: "648*"
     steps:
       - name: Checkout
         uses: actions/checkout@master

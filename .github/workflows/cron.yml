@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        i: [1 , 2]
+        i: [1, 2]
         include:
           - i: 1
             symbol: "647"
@@ -31,7 +31,8 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
-          SMTP_TO: "cbosa-648@googlegroups.com"
+          SMTP_TO: "${{matrix.email}}"
+          SYMBOL: "${{matrix.symbol}}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

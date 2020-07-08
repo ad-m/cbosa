@@ -6,6 +6,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        i: [1, 2]
+        include:
+          - i: 1
+            symbol: "647"
+            email: "naczelnik@jawnosc.tk"
+          - i: 2
+            symbol: "648*"
+            email: "naczelnik@jawnosc.tk"
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -20,12 +30,13 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
-          SMTP_TO: "naczelnik@jawnosc.tk"
+          SMTP_TO: "${{matrix.email}}"
+          SYMBOL: "${{matrix.symbol}}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Update by GitHub Action" storage.json || echo "Nothing to update"
+          git commit -m "Update by GitHub Action" *.json || echo "Nothing to update"
       - uses: actions/upload-artifact@master
         with:
           name: build-artifact

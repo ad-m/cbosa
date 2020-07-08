@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        symbol: []
-        email: []
+        i: [1 , 2]
         include:
-          - symbol: "647"
+          - i: 1
+            symbol: "647"
             email: "cbosa-647@googlegroups.com"
-          - symbol: "648*"
+          - i: 2
+            symbol: "648*"
             email: "cbosa-648@googlegroups.com"
     steps:
       - name: Checkout

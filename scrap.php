@@ -95,7 +95,7 @@ function parse_serp($html){
 $output = ''; 
 $all = 0;
 $new = 0;
-$json = json_decode((file_exists(BASE.'storage.json') ? file_get_contents(BASE.'storage.json') : "[]"),True);
+$json = json_decode((file_exists(BASE."${$symbol}.json") ? file_get_contents(BASE."${$symbol}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
@@ -110,7 +110,7 @@ for($i=$start; $i<=$end; $i++){
   $html = get($curl,"http://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
-file_put_contents(BASE.'storage.json', json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE."${$symbol}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];

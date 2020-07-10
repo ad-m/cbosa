@@ -19,7 +19,7 @@ include('simple_html_dom.php');
 
 require 'PHPMailer/PHPMailerAutoload.php';
 
-function mail_html($to, $subject, $html){
+function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
     $mail->SMTPDebug = 3; // Enable verbose debug output
 
@@ -126,7 +126,7 @@ file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.html"),$message);
 
 if($new > 0){
 	echo "Wysłano powiadomienie";
-	var_dump(mail_html($to, $subject, $message));
+	var_dump(mail_html($to, $subject, $message, $symbol));
 }else{
 	echo "Wstrzymano się od powiadomienia";
 }

@@ -10,14 +10,20 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        i: [1, 2]
+        i: [1, 2, 3]
         include:
           - i: 1
             symbol: "647"
             email: "cbosa-647@googlegroups.com"
+            mode: "uzasadnione"
           - i: 2
             symbol: "648*"
             email: "cbosa-648@googlegroups.com"
+            mode: "uzasadnione"
+          - i: 3
+            symbol: "647"
+            email: "cbosa-647@googlegroups.com"
+            mode: 'wszystkie'
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -34,6 +40,7 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: "${{matrix.email}}"
           SYMBOL: "${{matrix.symbol}}"
+          MODE: "${{matrix.mode}}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

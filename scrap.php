@@ -5,7 +5,18 @@ $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
 $symbol = $_SERVER['argv'][3];
+$mode = $_SERVER['argv'][4];
 var_dump($_SERVER['argv']);
+
+if (empty($mode) || strlen($mode) == 0){
+  $mode == 'uzasadnione';
+};
+
+if($mode == 'uzasadnione'){
+  $uzasadnienia = 'takUzasadnienie=on&';
+}else{
+  $uzasadnienia = '';
+};
 
 if(!isset($_SERVER["HTTP_PROXY"])){
   $_SERVER['HTTP_PROXY'] = "https://127.0.0.1:8080";
@@ -76,7 +87,7 @@ $curl->set_proxy($_SERVER['HTTP_PROXY']);
 var_dump($curl -> get('http://httpbin.org/ip'));
 
 $data = get($curl, 'http://orzeczenia.nsa.gov.pl/cbo/query', True);
-$payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&takUzasadnienie=on&rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";
+$payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&${uzasadnienia}rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";
 $html = post($curl, 'http://orzeczenia.nsa.gov.pl/cbo/search', $payload);
 
 function parse_serp($html){
@@ -95,7 +106,7 @@ function parse_serp($html){
 $output = ''; 
 $all = 0;
 $new = 0;
-$json = json_decode((file_exists(BASE."${symbol}.json") ? file_get_contents(BASE."${symbol}.json") : "[]"),True);
+$json = json_decode((file_exists(BASE."${symbol}-${mode}.json") ? file_get_contents(BASE."${symbol}-${mode}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
@@ -110,11 +121,11 @@ for($i=$start; $i<=$end; $i++){
   $html = get($curl,"http://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
-file_put_contents(BASE."${symbol}.json", json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE."${symbol}-${mode}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];
-$subject = strftime('Orzecznictwo na dzien %d.%m.%Y');
+$subject = strftime("Orzecznictwo ${mode} na dzień %d.%m.%Y");
  // message
 $message = '<head><html><meta charset="utf-8"><base href="http://orzeczenia.nsa.gov.pl/" target="_blank">';
 $message.= '<style>a:link, a:active {color:#1155CC; text-decoration:none} a:hover {text-decoration:underline; cursor: pointer} a:visited{color:##6611CC}</style>';

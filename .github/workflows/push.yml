@@ -8,14 +8,20 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        i: [1, 2]
+        i: [1, 2, 3]
         include:
           - i: 1
             symbol: "647"
             email: "naczelnik@jawnosc.tk"
+            mode: "uzasadnione"
           - i: 2
             symbol: "648*"
             email: "naczelnik@jawnosc.tk"
+            mode: "uzasadnione"
+          - i: 3
+            symbol: "647"
+            email: "naczelnik@jawnosc.tk"
+            mode: 'wszystkie'
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -32,6 +38,7 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: "${{matrix.email}}"
           SYMBOL: "${{matrix.symbol}}"
+          MODE: "${{matrix.mode}}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

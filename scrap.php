@@ -32,8 +32,7 @@ require 'PHPMailer/PHPMailerAutoload.php';
 
 function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
-    $mail->SMTPDebug = 3; // Enable verbose debug output
-
+    $mail->CharSet = "UTF-8";
     $mail->isSMTP(); // Set mailer to use SMTP
     $mail->Host = $_SERVER['SMTP_HOST']; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication

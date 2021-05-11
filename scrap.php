@@ -120,6 +120,11 @@ for($i=$start; $i<=$end; $i++){
   $html = get($curl,"http://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
+
+if($new > 200){
+     throw new Exception('Notification overload. Has there been a filter failure?');
+};
+
 file_put_contents(BASE."${symbol}-${mode}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 

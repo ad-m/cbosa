@@ -121,8 +121,8 @@ for($i=$start; $i<=$end; $i++){
 };
 
 
-if($new > 200){
-     throw new Exception('Notification overload. Has there been a filter failure?');
+if($new > 100){
+     throw new Exception("Notification overload ($new > 100). Has there been a filter failure?');
 };
 
 file_put_contents(BASE."${symbol}-${mode}.json", json_encode($json, JSON_PRETTY_PRINT));

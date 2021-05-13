@@ -85,9 +85,9 @@ $curl->set_proxy($_SERVER['HTTP_PROXY']);
 
 var_dump($curl -> get('http://httpbin.org/ip'));
 
-$data = get($curl, 'http://orzeczenia.nsa.gov.pl/cbo/query', True);
+$data = get($curl, 'https://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&${uzasadnienia}rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";
-$html = post($curl, 'http://orzeczenia.nsa.gov.pl/cbo/search', $payload);
+$html = post($curl, 'https://orzeczenia.nsa.gov.pl/cbo/search', $payload);
 
 function parse_serp($html){
   $row = $html->find('table.info-list');
@@ -117,7 +117,7 @@ for($i=$start; $i<=$end; $i++){
     };
     $all+=1;
   }
-  $html = get($curl,"http://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
+  $html = get($curl,"https://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
 

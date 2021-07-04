@@ -42,7 +42,7 @@ function mail_html($to, $subject, $html, $symbol){
     $mail->Port = 587; // TCP port to connect to
 
     $mail->From = $_SERVER['SMTP_FROM'];
-    $mail->FromName = "CBOSA-$symbol";
+    $mail->FromName = "CBOSA-${symbol}.";
     $mail->addAddress($to); // Add a recipient
 
     $mail->WordWrap = 50; // Set word wrap to 50 characters
@@ -110,6 +110,7 @@ $json = json_decode((file_exists(BASE."${symbol}-${mode}.json") ? file_get_conte
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
+  if($new >= 20) { echo "Przerwano z powodu duzej wiadomości."; break; }
   foreach($row as $key=>$value){
     if(in_array($key,$json) === false){
       $output.= $value;

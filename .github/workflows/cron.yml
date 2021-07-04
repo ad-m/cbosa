@@ -38,7 +38,7 @@ jobs:
         run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_USER: "cbosa-648@jawnosc.tk"
+          SMTP_USER: "AKIATTWUTKSTQ2RLDQGQ"
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: "cbosa-648@jawnosc.tk"
           SMTP_TO: "${{matrix.email}}"

@@ -29,6 +29,8 @@ jobs:
           submodules: true
       - name: Make dir for artifact
         run: mkdir -p artifact
+      - name: Show IP
+        run: curl -s https://httpbin.org/ip
       - name: Execute PHP
         run: ./update.sh
         env:

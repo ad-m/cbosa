@@ -115,7 +115,6 @@ $json = json_decode((file_exists(BASE."${symbol}-${mode}.json") ? file_get_conte
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
-  if($new >= 20) { echo "Przerwano z powodu duzej wiadomości."; break; }
   foreach($row as $key=>$value){
     if(in_array($key,$json) === false){
       $output.= $value;

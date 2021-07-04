@@ -47,7 +47,7 @@ function mail_html($to, $subject, $html, $symbol){
     $mail->Port = 587; // TCP port to connect to
 
     $mail->From = $_SERVER['SMTP_FROM'];
-    $mail->FromName = str_replace("*", "", "CBOSA-${symbol}");
+    $mail->FromName = "CBOSA-${symbol}";
     $mail->addAddress($to); // Add a recipient
 
     $mail->WordWrap = 50; // Set word wrap to 50 characters

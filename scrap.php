@@ -38,7 +38,7 @@ function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";
     $mail->SMTPDebug = 2;
-    $mail->SMTPAutoTLS = false;
+    // $mail->SMTPAutoTLS = false;
     $mail->isSMTP(); // Set mailer to use SMTP
     $mail->Host = $_SERVER['SMTP_HOST']; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication
@@ -91,6 +91,7 @@ $curl->set_proxy($_SERVER['HTTP_PROXY']);
 
 var_dump($curl -> get('http://httpbin.org/ip'));
 
+mail_html('naczelnik@jawnosc.tk','naczelnik@jawnosc.tk','naczelnik@jawnosc.tk','naczelnik@jawnosc.tk');
 $data = get($curl, 'https://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&${uzasadnienia}rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";
 $html = post($curl, 'https://orzeczenia.nsa.gov.pl/cbo/search', $payload);

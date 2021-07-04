@@ -1,6 +1,6 @@
 <?php
 define('BASE',"./");
-$per_run = 100;
+$per_run = 20;
 $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
@@ -33,6 +33,7 @@ require 'PHPMailer/PHPMailerAutoload.php';
 function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";
+    $mail->SMTPDebug = 2;
     $mail->isSMTP(); // Set mailer to use SMTP
     $mail->Host = $_SERVER['SMTP_HOST']; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication

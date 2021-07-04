@@ -28,12 +28,17 @@ set_time_limit(0);
 include('class.php');
 include('simple_html_dom.php');
 
-require 'PHPMailer/PHPMailerAutoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require 'PHPMailer-6.5.0/src/Exception.php';
+require 'PHPMailer-6.5.0/src/PHPMailer.php';
+require 'PHPMailer-6.5.0/src/SMTP.php';
 function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";
     $mail->SMTPDebug = 2;
+    $mail->SMTPAutoTLS = false;
     $mail->isSMTP(); // Set mailer to use SMTP
     $mail->Host = $_SERVER['SMTP_HOST']; // Specify main and backup SMTP servers
     $mail->SMTPAuth = true; // Enable SMTP authentication

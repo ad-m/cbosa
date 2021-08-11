@@ -24,7 +24,7 @@ if(!isset($_SERVER["HTTP_PROXY"])){
 
 error_reporting(E_ALL);
 set_time_limit(0);
- // ignore_user_abort(true);
+
 include('class.php');
 include('simple_html_dom.php');
 

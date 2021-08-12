@@ -34,6 +34,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'PHPMailer-6.5.0/src/Exception.php';
 require 'PHPMailer-6.5.0/src/PHPMailer.php';
 require 'PHPMailer-6.5.0/src/SMTP.php';
+
 function mail_html($to, $subject, $html, $symbol){
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";

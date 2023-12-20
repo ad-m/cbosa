@@ -50,7 +50,7 @@ jobs:
           git commit -m "Update by GitHub Action" *.json || echo "Nothing to update"
       - uses: actions/upload-artifact@master
         with:
-          name: build-artifact
+          name: build-artifact-${{matrix.symbol}}
           path: artifact
       - name: Show Proxy logs
         run: make logs

@@ -52,7 +52,7 @@ jobs:
           git commit -m "Update by GitHub Action for ${{matrix.symbol}} & ${{matrix.mode}}" *.json || echo "Nothing to update"
       - uses: actions/upload-artifact@master
         with:
-          name: build-artifact
+          name: build-artifact-${{matrix.symbol}}
           path: artifact
       - name: Push changes
         uses: ad-m/github-push-action@master

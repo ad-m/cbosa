@@ -40,7 +40,7 @@ jobs:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_USER: "AKIATTWUTKSTQ2RLDQGQ"
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_FROM: "cbosa-648@jawnosc.tk"
+          SMTP_FROM: "cbosa-648@jawne.info.pl"
           SMTP_TO: "${{matrix.email}}"
           SYMBOL: "${{matrix.symbol}}"
           MODE: "${{matrix.mode}}"

@@ -10,20 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        i: [1, 2, 3]
-        include:
-          - i: 1
-            symbol: "647"
-            email: "naczelnik@jawne.info.pl"
-            mode: "uzasadnione"
-          - i: 2
-            symbol: "648*"
-            email: "naczelnik@jawne.info.pl"
-            mode: "uzasadnione"
-          - i: 3
-            symbol: "647"
-            email: "naczelnik@jawne.info.pl"
-            mode: 'wszystkie'
+        i: [4, 0, 1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -40,9 +27,8 @@ jobs:
           SMTP_USER: "AKIATTWUTKSTQ2RLDQGQ"
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: "cbosa-648@jawne.info.pl"
-          SMTP_TO: "${{matrix.email}}"
-          SYMBOL: "${{matrix.symbol}}"
-          MODE: "${{matrix.mode}}"
+          SMTP_TO: "dry-run"
+          MODE: "${{matrix.i}}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"

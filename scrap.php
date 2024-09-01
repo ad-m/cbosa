@@ -125,7 +125,10 @@ for($i=$start; $i<=$end; $i++){
     };
     $all+=1;
   }
-  if($new > 100) break;
+  if($new > 100) {
+    echo 'We have over 100 new records, lets go ahead!'
+    break
+  }
   $html = get($curl,"https://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 

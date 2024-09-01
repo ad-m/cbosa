@@ -72,7 +72,7 @@ function sleep_visual($time){
   echo "\r";
 }
 function get($curl, $url,$ref_update = True, $sleep = True){
-  if($sleep) sleep_visual(rand(5,10));
+  if($sleep) sleep_visual(rand(10,15));
   echo "[GET] $url\n";
   $data = $curl -> get($url);
   $curl -> referer = $url;
@@ -80,7 +80,7 @@ function get($curl, $url,$ref_update = True, $sleep = True){
 }
 function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True){
   echo "$payload\n";
-  if($sleep) sleep_visual(rand(5,10));
+  if($sleep) sleep_visual(rand(10,15));
   echo "[POST] $url\n";
   $data = $curl -> post($url,$payload);
   $curl -> referer = $url;
@@ -113,7 +113,7 @@ function parse_serp($html){
 $output = ''; 
 $all = 0;
 $new = 0;
-$json = json_decode((file_exists(BASE."${position}.json") ? file_get_contents(BASE."${position}.json") : "[]"),True);
+$json = json_decode((file_exists(BASE."${mode}.json") ? file_get_contents(BASE."${mode}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
@@ -125,7 +125,10 @@ for($i=$start; $i<=$end; $i++){
     };
     $all+=1;
   }
-  if($new > 100) break;
+  if($new > 100) {
+    echo 'We have over 100 new records, lets go ahead!';
+    break;
+  }
   $html = get($curl,"https://orzeczenia.nsa.gov.pl/cbo/find?p=".$i);
 };
 
@@ -134,7 +137,7 @@ if($new > 200){
      throw new Exception("Notification overload ($new > 200). Has there been a filter failure?");
 };
 
-file_put_contents(BASE."${position}.json", json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE."${mode}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'] == 'ok' ? $config_mode['email'] : 'naczelnik@jawne.info.pl';

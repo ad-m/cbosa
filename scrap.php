@@ -4,19 +4,18 @@ $per_run = 100;
 $start = (((int)$_SERVER['argv'][1])*$per_run)+2;
 $end = $start+$per_run;
 $sad = $_SERVER['argv'][2];
-$symbol = $_SERVER['argv'][3];
-$mode = $_SERVER['argv'][4];
+
+$config_file = json_decode(file_get_contents('./config.json'), True);
+
+$position = intval($_SERVER['argv'][3]);
+
+$config_mode = $config_file[$position];
+
+$query = $config_mode['query'];
+$title = $config_mode['title'];
 var_dump($_SERVER['argv']);
+var_dump($config_mode);
 
-if (empty($mode) || strlen($mode) == 0){
-  $mode == 'uzasadnione';
-};
-
-if($mode == 'uzasadnione'){
-  $uzasadnienia = 'takUzasadnienie=on&';
-}else{
-  $uzasadnienia = '';
-};
 
 if(!isset($_SERVER["HTTP_PROXY"])){
   $_SERVER['HTTP_PROXY'] = "https://127.0.0.1:8080";
@@ -35,7 +34,7 @@ require 'PHPMailer-6.5.0/src/Exception.php';
 require 'PHPMailer-6.5.0/src/PHPMailer.php';
 require 'PHPMailer-6.5.0/src/SMTP.php';
 
-function mail_html($to, $subject, $html, $symbol){
+function mail_html($to, $subject, $html, $title){
     $mail = new PHPMailer(true);
     $mail->CharSet = "UTF-8";
     $mail->SMTPDebug = 2;
@@ -48,7 +47,7 @@ function mail_html($to, $subject, $html, $symbol){
     $mail->Port = 587; // TCP port to connect to
 
     $mail->From = $_SERVER['SMTP_FROM'];
-    $mail->FromName = "CBOSA-${symbol}";
+    $mail->FromName = "CBOSA-${title}";
     $mail->addAddress($to); // Add a recipient
 
     $mail->WordWrap = 50; // Set word wrap to 50 characters
@@ -92,8 +91,9 @@ $curl->set_proxy($_SERVER['HTTP_PROXY']);
 
 var_dump($curl -> get('http://httpbin.org/ip'));
 
+
 $data = get($curl, 'https://orzeczenia.nsa.gov.pl/cbo/query', True);
-$payload = "wszystkieSlowa=&wystepowanie=gdziekolwiek&odmiana=on&sygnatura=&sad={$sad}&rodzaj=dowolny&symbole={$symbol}&odDaty=&doDaty=&sedziowie=&funkcja=dowolna&${uzasadnienia}rodzaj_organu=&hasla=&akty=&przepisy=&publikacje=&glosy=&submit=Szukaj";
+$payload = "sad=${sad}&${query}";
 $html = post($curl, 'https://orzeczenia.nsa.gov.pl/cbo/search', $payload);
 
 function parse_serp($html){
@@ -112,7 +112,7 @@ function parse_serp($html){
 $output = ''; 
 $all = 0;
 $new = 0;
-$json = json_decode((file_exists(BASE."${symbol}-${mode}.json") ? file_get_contents(BASE."${symbol}-${mode}.json") : "[]"),True);
+$json = json_decode((file_exists(BASE."${position}.json") ? file_get_contents(BASE."${position}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
@@ -133,7 +133,7 @@ if($new > 200){
      throw new Exception("Notification overload ($new > 200). Has there been a filter failure?");
 };
 
-file_put_contents(BASE."${symbol}-${mode}.json", json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE."${position}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'];
@@ -143,13 +143,13 @@ $message = '<head><html><meta charset="utf-8"><base href="http://orzeczenia.nsa.
 $message.= '<style>a:link, a:active {color:#1155CC; text-decoration:none} a:hover {text-decoration:underline; cursor: pointer} a:visited{color:##6611CC}</style>';
 $message.= '</head><body>';
 $message.= $output;
-$message.= "<p>Przeanalizowano $i stron wyników dla $symbol ($start-$end) znajdując $all orzeczeń, w tym $new nowych.</p>";
+$message.= "<p>Przeanalizowano $i stron wyników dla $payload ($start-$end) znajdując $all orzeczeń, w tym $new nowych.</p>";
 $message.= '</body></html>';
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.html"),$message);
 
 if($new > 0){
 	echo "Wysłano powiadomienie";
-	var_dump(mail_html($to, $subject, $message, $symbol));
+	var_dump(mail_html($to, $subject, $message, $title));
 }else{
 	echo "Wstrzymano się od powiadomienia";
 }

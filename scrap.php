@@ -7,12 +7,13 @@ $sad = $_SERVER['argv'][2];
 
 $config_file = json_decode(file_get_contents('./config.json'), True);
 
-$position = intval($_SERVER['argv'][3]);
+$mode = intval($_SERVER['argv'][3]);
 
-$config_mode = $config_file[$position];
+$config_mode = $config_file[$mode];
 
 $query = $config_mode['query'];
 $title = $config_mode['title'];
+
 var_dump($_SERVER['argv']);
 var_dump($config_mode);
 
@@ -136,8 +137,9 @@ if($new > 200){
 file_put_contents(BASE."${position}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
-$to  = $_SERVER['SMTP_TO'];
-$subject = strftime("Orzecznictwo ${mode} na dzień %d.%m.%Y");
+$to  = $_SERVER['SMTP_TO'] == 'ok' ? $config_mode['email'] : 'naczelnik@jawne.info.pl';
+
+$subject = strftime("Orzecznictwo ${title} na dzień %d.%m.%Y");
  // message
 $message = '<head><html><meta charset="utf-8"><base href="http://orzeczenia.nsa.gov.pl/" target="_blank">';
 $message.= '<style>a:link, a:active {color:#1155CC; text-decoration:none} a:hover {text-decoration:underline; cursor: pointer} a:visited{color:##6611CC}</style>';

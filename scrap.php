@@ -72,7 +72,7 @@ function sleep_visual($time){
   echo "\r";
 }
 function get($curl, $url,$ref_update = True, $sleep = True){
-  if($sleep) sleep_visual(rand(5,10));
+  if($sleep) sleep_visual(rand(10,15));
   echo "[GET] $url\n";
   $data = $curl -> get($url);
   $curl -> referer = $url;
@@ -80,7 +80,7 @@ function get($curl, $url,$ref_update = True, $sleep = True){
 }
 function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True){
   echo "$payload\n";
-  if($sleep) sleep_visual(rand(5,10));
+  if($sleep) sleep_visual(rand(10,15));
   echo "[POST] $url\n";
   $data = $curl -> post($url,$payload);
   $curl -> referer = $url;

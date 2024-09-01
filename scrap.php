@@ -113,7 +113,7 @@ function parse_serp($html){
 $output = ''; 
 $all = 0;
 $new = 0;
-$json = json_decode((file_exists(BASE."${position}.json") ? file_get_contents(BASE."${position}.json") : "[]"),True);
+$json = json_decode((file_exists(BASE."${mode}.json") ? file_get_contents(BASE."${mode}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
@@ -134,7 +134,7 @@ if($new > 200){
      throw new Exception("Notification overload ($new > 200). Has there been a filter failure?");
 };
 
-file_put_contents(BASE."${position}.json", json_encode($json, JSON_PRETTY_PRINT));
+file_put_contents(BASE."${mode}.json", json_encode($json, JSON_PRETTY_PRINT));
 file_put_contents(BASE.strftime("artifact/%Y-%m-%d-%H-%M.json"), json_encode($json, JSON_PRETTY_PRINT));
 
 $to  = $_SERVER['SMTP_TO'] == 'ok' ? $config_mode['email'] : 'naczelnik@jawne.info.pl';

@@ -95,7 +95,7 @@ var_dump($curl -> get('http://httpbin.org/ip'));
 
 $data = get($curl, 'https://orzeczenia.nsa.gov.pl/cbo/query', True);
 $payload = "sad=${sad}&${query}";
-print("Payload:")
+print("Payload:");
 var_dump($payload);
 
 $html = post($curl, 'https://orzeczenia.nsa.gov.pl/cbo/search', $payload);

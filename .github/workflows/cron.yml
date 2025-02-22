@@ -36,7 +36,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git pull origin master
           git commit -m "Update by GitHub Action for ${{matrix.symbol}} & ${{matrix.mode}}" *.json || echo "Nothing to update"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: artifact

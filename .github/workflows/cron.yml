@@ -29,16 +29,16 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: "cbosa-648@jawne.info.pl"
           SMTP_TO: "ok"
-          MODE: "${{matrix.i}}"
+          MODE: "${{ matrix.i }}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git pull origin master
-          git commit -m "Update by GitHub Action for ${{matrix.symbol}} & ${{matrix.mode}}" *.json || echo "Nothing to update"
+          git commit -m "Update by GitHub Action for ${{matrix.i}}" *.json || echo "Nothing to update"
       - uses: actions/upload-artifact@v4
         with:
-          name: build-artifact
+          name: build-artifact-${{ matrix.i }}
           path: artifact
       - name: Push changes
         uses: ad-m/github-push-action@master

@@ -28,7 +28,7 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SMTP_FROM: "cbosa-648@jawne.info.pl"
           SMTP_TO: "dry-run"
-          MODE: "${{matrix.i}}"
+          MODE: "${{ matrix.i }}"
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
@@ -36,7 +36,7 @@ jobs:
           git commit -m "Update by GitHub Action" *.json || echo "Nothing to update"
       - uses: actions/upload-artifact@v4
         with:
-          name: build-artifact
+          name: build-artifact-${{ matrix.i }}
           path: artifact
       - name: Show Proxy logs
         run: make logs

@@ -14,6 +14,19 @@ Automat każdego dnia roboczego przeszukuje Centralną Bazę Orzeczeń Sądów A
 
 W przypadku znalezienia jakichkolwiek nowych orzeczeń wysyłane jest powiadomienie. W przypadku braku nowych orzeczeń podczas danego  
 
+## Proxy
+
+Scraper używa lokalnego proxy `hola-proxy` w celu obejścia blokad sieciowych. Binarka pobierana jest na żądanie z release'u upstreamu:
+
+- Źródło: https://github.com/snawoot-proxies-forks/hola-proxy/releases/tag/v1.18.2-fork (asset `hola-proxy.linux-amd64`)
+- Wersja i suma SHA-256 są zapisane w `Makefile` (`PROXY_VERSION`, `PROXY_SHA256`).
+- `make proxy` pobiera binarkę, weryfikuje sumę kontrolną i uruchamia ją w tle (port 8080).
+- `make run` uruchamia kontener PHP, który łączy się z proxy przez `--add-host=hola-proxy:host-gateway`.
+
+Aktualizacja do nowszego release'u: zmień `PROXY_VERSION` i `PROXY_SHA256` w `Makefile` na wartości z odpowiedniego releasu (`gh release view <tag> --repo snawoot-proxies-forks/hola-proxy --json assets`).
+
+Dotyczy wyłącznie środowiska CI (Linux x86_64). Lokalnie na innym OS wymaga osobnej binarki dla danej platformy.
+
 ## Utrudnienia ze strony Naczelnego Sądu Administracyjnego
 
 Wskazać należy, że Naczelny Sąd Administracyjny podejmuje [aktywne działania blokujące działanie narzędzia](https://ochrona.jawne.info.pl/2015/11/10/otwarte-dane-wsparciem-partnerstwa-obywatel-panstwo/), co skutkuje drastycznym wzrostem kosztu infrastruktury wymaganej na obchodzenie wprowadzanych zabezpieczeń. To zaś powoduje m. in. dostępność listy dyskusyjnej wyłącznie dla spraw z zakresu dostępu do informacji publicznej, pomimo zainteresowaniami innymi tematami. Istnieje możliwość odpłatnego uzyskania subskrypcji orzeczeń innych tematów – szczegóły do indywidualnego ustalenia po kontakcie pod adresem `naczelnik@jawne.info.pl`.

@@ -118,6 +118,7 @@ $all = 0;
 $new = 0;
 $json = json_decode((file_exists(BASE."${mode}.json") ? file_get_contents(BASE."${mode}.json") : "[]"),True);
 for($i=$start; $i<=$end; $i++){
+  if(!$html) { echo "Przerwano z powodu pustej odpowiedzi z serwera"; break; };
   $row = parse_serp($html);
   if($row === false) { echo "Przerwano z powodu wykrycia CAPTCHY"; break; };
   foreach($row as $key=>$value){

@@ -204,7 +204,7 @@ class PHPMailer
      *
      * @var int
      */
-    public $WordWrap = 0;
+     public $WordWrap = self::STD_LINE_LENGTH;
 
     /**
      * Which method to use to send mail.
@@ -227,7 +227,7 @@ class PHPMailer
      *
      * @var bool
      */
-    public $UseSendmailOptions = true;
+    public $isUsingSendmailOptions = true;
 
     /**
      * The email address that a reading confirmation should be sent to, also known as read receipt.
@@ -287,7 +287,7 @@ class PHPMailer
      *
      * @var int
      */
-    public $Port = 25;
+     public $Port = self::SMTP_PORT;
 
     /**
      * The SMTP HELO/EHLO name used for the SMTP connection.
@@ -370,7 +370,7 @@ class PHPMailer
      *
      * @var int
      */
-    public $Timeout = 300;
+     public $Timeout = self::SMTP_TIMEOUT;
 
     /**
      * Comma separated list of DSN notifications

@@ -10,7 +10,7 @@
  * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author Brent R. Matzelle (original founder)
  * @copyright 2012 - 2020 Marcus Bointon
- * @copyright 2010 - 2012 Jim Jagielski
+ * @copyright 20const CSRF_PROTECTION_TIMEOUT = 10; // define as a constant - 2012 Jim Jagielski
  * @copyright 2004 - 2009 Andy Prevost
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  * @note This program is distributed in the hope that it will be useful - WITHOUT
@@ -45,7 +45,7 @@ use Hayageek\OAuth2\Client\Provider\Yahoo;
 //@see https://github.com/stevenmaguire/oauth2-microsoft
 use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
 
-if (!isset($_GET['code']) && !isset($_GET['provider'])) {
+if (!isset($_GET['code']) && null === $providerName) {
     ?>
 <html>
 <body>Select Provider:<br>
@@ -65,19 +65,19 @@ session_start();
 $providerName = '';
 
 if (array_key_exists('provider', $_GET)) {
-    $providerName = $_GET['provider'];
+    if (isset($_GET['provider'])) { $providerName = $_GET['provider']; }
     $_SESSION['provider'] = $providerName;
 } elseif (array_key_exists('provider', $_SESSION)) {
     $providerName = $_SESSION['provider'];
 }
-if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
+if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) { exit('Only Google, Microsoft and Yahoo OAuth2 providers are currently supported in this script.'); } else {
     exit('Only Google, Microsoft and Yahoo OAuth2 providers are currently supported in this script.');
 }
 
 //These details are obtained by setting up an app in the Google developer console,
 //or whichever provider you're using.
-$clientId = 'RANDOMCHARS-----duv1n2.apps.googleusercontent.com';
-$clientSecret = 'RANDOMCHARS-----lGyjPcRtvP';
+const CLIENT_ID = 'RANDOMCHARS-----duv1n2.apps.googleusercontent.com'; $clientId = CLIENT_ID; // define as a constant
+const CLIENT_SECRET = 'RANDOMCHARS-----lGyjPcRtvP'; $clientSecret = CLIENT_SECRET; // define as a constant
 
 //If this automatic URL doesn't work, set it yourself manually to the URL of this script
 $redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
@@ -116,18 +116,18 @@ switch ($providerName) {
         break;
 }
 
-if (null === $provider) {
+if (null === $provider) return 'Provider missing';
     exit('Provider missing');
 }
 
-if (!isset($_GET['code'])) {
+if (null === $_GET['code']) {
     //If we don't have an authorization code then get one
     $authUrl = $provider->getAuthorizationUrl($options);
     $_SESSION['oauth2state'] = $provider->getState();
     header('Location: ' . $authUrl);
     exit;
     //Check given state against previously stored one to mitigate CSRF attack
-} elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+} if (null !== $_GET['state'] && $_GET['state'] !== $_SESSION['oauth2state']) {
     unset($_SESSION['oauth2state']);
     unset($_SESSION['provider']);
     exit('Invalid state');

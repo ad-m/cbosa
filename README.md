@@ -20,6 +20,7 @@ Scraper używa lokalnego proxy `hola-proxy` w celu obejścia blokad sieciowych. 
 
 - Źródło: https://github.com/snawoot-proxies-forks/hola-proxy/releases/tag/v1.18.2-fork (asset `hola-proxy.linux-amd64`)
 - Wersja i suma SHA-256 są zapisane w `Makefile` (`PROXY_VERSION`, `PROXY_SHA256`).
+- Węzeł wyjściowy to Polska (`PROXY_COUNTRY=pl`) – od 11.09.2026 NSA zrywa połączenia TLS z domyślnych (US) węzłów Hola.
 - `make proxy` pobiera binarkę, weryfikuje sumę kontrolną i uruchamia ją w tle (port 8080).
 - `make run` uruchamia kontener PHP, który łączy się z proxy przez `--add-host=hola-proxy:host-gateway`.
 

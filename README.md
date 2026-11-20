@@ -14,6 +14,18 @@ Automat każdego dnia roboczego przeszukuje Centralną Bazę Orzeczeń Sądów A
 
 W przypadku znalezienia jakichkolwiek nowych orzeczeń wysyłane jest powiadomienie. W przypadku braku nowych orzeczeń podczas danego  
 
+## Uruchomienie
+
+Scraper to `cbosa.py` (Python 3.12, zależności w `requirements.txt`):
+
+```bash
+pip install -r requirements-dev.txt
+make test                                        # testy parsera na zapisanej stronie wyników
+PROXY_URL= python cbosa.py 0 dowolny 1           # tryb 1 (648*) bez proxy
+```
+
+Bez `SMTP_HOST` powiadomienie nie jest wysyłane, a jedynie zapisywane w `artifact/`. Gdy `SMTP_TO` jest różne od `ok`, powiadomienia trafiają na `naczelnik@jawne.info.pl` zamiast na listę z `config.json`. Proces kończy się kodem 1, gdy nie pobrano żadnego orzeczenia.
+
 ## Proxy
 
 Scraper używa lokalnego proxy `hola-proxy` w celu obejścia blokad sieciowych. Binarka pobierana jest na żądanie z release'u upstreamu:
@@ -22,7 +34,7 @@ Scraper używa lokalnego proxy `hola-proxy` w celu obejścia blokad sieciowych. 
 - Wersja i suma SHA-256 są zapisane w `Makefile` (`PROXY_VERSION`, `PROXY_SHA256`).
 - Węzeł wyjściowy to Polska (`PROXY_COUNTRY=pl`) – od 11.09.2026 NSA zrywa połączenia TLS z domyślnych (US) węzłów Hola.
 - `make proxy` pobiera binarkę, weryfikuje sumę kontrolną i uruchamia ją w tle (port 8080).
-- `make run` uruchamia kontener PHP, który łączy się z proxy przez `--add-host=hola-proxy:host-gateway`.
+- `make run` uruchamia `cbosa.py` z proxy `PROXY_URL` (domyślnie `http://127.0.0.1:8080`); pusty `PROXY_URL=` oznacza połączenie bezpośrednie.
 
 Aktualizacja do nowszego release'u: zmień `PROXY_VERSION` i `PROXY_SHA256` w `Makefile` na wartości z odpowiedniego releasu (`gh release view <tag> --repo snawoot-proxies-forks/hola-proxy --json assets`).
 

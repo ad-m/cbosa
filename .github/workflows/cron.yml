@@ -20,9 +20,14 @@ jobs:
         uses: actions/checkout@master
         with:
           submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Make dir for artifact
         run: mkdir -p artifact
-      - name: Execute PHP
+      - name: Run scraper
         run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

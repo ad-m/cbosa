@@ -8,3 +8,6 @@ cookies.txt
 artifact/
 phalcon.sh
 .env
+!tests/fixtures/*.html
+__pycache__/
+.pytest_cache/

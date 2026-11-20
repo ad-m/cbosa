@@ -18,11 +18,18 @@ jobs:
         uses: actions/checkout@master
         with:
           submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Test
+        run: make test
       - name: Make dir for artifact
         run: mkdir -p artifact
       - name: Show IP
         run: curl -s https://httpbin.org/ip
-      - name: Execute PHP
+      - name: Run scraper
         run: ./update.sh
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}

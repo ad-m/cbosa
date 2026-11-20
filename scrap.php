@@ -137,6 +137,11 @@ for($i=$start; $i<=$end; $i++){
 };
 
 
+if($all == 0){
+  echo "Nie pobrano żadnych orzeczeń - błąd połączenia lub blokada";
+  exit(1);
+};
+
 if($new > 200){
      throw new Exception("Notification overload ($new > 200). Has there been a filter failure?");
 };

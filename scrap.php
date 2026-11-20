@@ -75,6 +75,8 @@ function get($curl, $url,$ref_update = True, $sleep = True){
   if($sleep) sleep_visual(rand(10,15));
   echo "[GET] $url\n";
   $data = $curl -> get($url);
+  echo "[HTTP ".$curl->code."] ".strlen($data)." bytes\n";
+  if(strlen($data) > 0 && strlen($data) < 2000) echo $data."\n";
   $curl -> referer = $url;
   return str_get_html($data);
 }
@@ -83,6 +85,8 @@ function post($curl, $url, $payload = array(), $ref_update = True, $sleep = True
   if($sleep) sleep_visual(rand(10,15));
   echo "[POST] $url\n";
   $data = $curl -> post($url,$payload);
+  echo "[HTTP ".$curl->code."] ".strlen($data)." bytes\n";
+  if(strlen($data) > 0 && strlen($data) < 2000) echo $data."\n";
   $curl -> referer = $url;
   return str_get_html($data);
 }
